@@ -1,5 +1,21 @@
 const HOLE_HEIGHT = 120;
+const PIPE_INTERVAL = 1500;
+const PIPE_SPEED = 0.75;
 const pipes = [];
+let timeSinceLastPipe = 0;
+
+export function updatePipes(delta) {
+  timeSinceLastPipe += delta;
+
+  if (timeSinceLastPipe > PIPE_INTERVAL) {
+    timeSinceLastPipe -= PIPE_INTERVAL;
+    createPipe();
+  }
+
+  pipes.forEach((pipe) => {
+    pipe.left = pipe.left - delta * PIPE_SPEED;
+  });
+}
 
 function createPipe() {
   const pipeElem = document.createElement('div');
